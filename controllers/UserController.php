@@ -22,21 +22,21 @@ class UserController extends Controller
     }
 
     public function behaviors()
-    {
-        return [
-            'corsFilter' => [
-                'class' => \yii\filters\Cors::class,
-                'cors' => [
-                    'Origin' => ['https://d1very.github.io'],  // Доверенный источник
-                    'Access-Control-Request-Method' => ['GET', 'POST', 'OPTIONS'],  // Разрешенные методы
-                    'Access-Control-Allow-Headers' => ['Content-Type', 'Authorization', 'X-CSRF-Token'],  // Разрешаем заголовки
-                    'Access-Control-Allow-Credentials' => true,  // Разрешаем отправку куки
-                    'Access-Control-Max-Age' => 3600,  // Кэширование preflight
-                    'Access-Control-Allow-Origin' => ['https://d1very.github.io'],  // Разрешаем доступ с фронтенда
-                ],
-            ],
-        ];
-    }
+{
+    $behaviors = parent::behaviors();
+
+    $behaviors['corsFilter'] = [
+        'class' => \yii\filters\Cors::class,
+        'cors' => [
+            'Origin' => ['https://d1very.github.io'],
+            'Access-Control-Allow-Credentials' => true,
+            'Access-Control-Allow-Headers' => ['Content-Type', 'Authorization'],
+            'Access-Control-Allow-Methods' => ['GET', 'POST', 'OPTIONS'],
+        ],
+    ];
+
+    return $behaviors;
+}
 
     public function actionGetUser()
     {
