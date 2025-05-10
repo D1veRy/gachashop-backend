@@ -8,22 +8,6 @@ use app\models\Card; // Модель карты
 
 class CardController extends Controller
 {
-
-    public function behaviors()
-    {
-        $behaviors = parent::behaviors();
-        $behaviors['corsFilter'] = [
-            'class' => \yii\filters\Cors::class,
-            'cors' => [
-                'Origin' => ['https://d1very.github.io'],  // Указывайте правильный источник вашего фронта
-                'Access-Control-Request-Method' => ['POST', 'OPTIONS', 'DELETE'],  // Разрешаем POST, OPTIONS и DELETE
-                'Access-Control-Allow-Credentials' => true,
-                'Access-Control-Allow-Headers' => ['Content-Type', 'Authorization', 'X-CSRF-Token'],  // Добавляем нужные заголовки
-            ],
-        ];
-
-        return $behaviors;
-    }
     public function actionSave()
     {
         // Проверка CSRF токена
