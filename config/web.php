@@ -15,18 +15,14 @@ $config = [
         'response' => [
             'format' => yii\web\Response::FORMAT_JSON
         ],
-    'request' => [
-        'cookieValidationKey' => 'dsfdsfsfsdfsdfsdf',
-        'csrfParam' => '_csrf',
-    ],
-    'i18n' => [
-        'translations' => [
-            'yii/bootstrap5' => [
-                'class' => 'yii\i18n\PhpMessageSource',
-                'basePath' => '@yii/bootstrap5/messages',
+        'i18n' => [
+            'translations' => [
+                'yii/bootstrap5' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@yii/bootstrap5/messages',
+                ],
             ],
         ],
-    ],
         'timeZone' => 'Europe/Moscow',
         'request' => [
             'cookieValidationKey' => '2qth1u7lIgEbySpL',
@@ -38,23 +34,23 @@ $config = [
             ],
         ],
         'session' => [
-    'class' => 'yii\web\Session',
-    'name' => 'PHPSESSID',
-    'useCookies' => true,
-    'cookieParams' => [
-        'httpOnly' => true,
-        'secure' => false,  // только на продакшн
-        'sameSite' => 'Lax', // или попробуйте 'Lax' или 'Strict'
-    ],
-    'timeout' => 86400,
-],
+            'class' => 'yii\web\Session',
+            'name' => 'PHPSESSID',
+            'useCookies' => true,
+            'cookieParams' => [
+                'httpOnly' => true,
+                'secure' => false,  // только на продакшн
+                'sameSite' => 'Lax', // или попробуйте 'Lax' или 'Strict'
+            ],
+            'timeout' => 86400,
+        ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
             'identityClass' => 'app\models\UserIdentity',
             'enableAutoLogin' => true,
-        'loginUrl' => null,
+            'loginUrl' => null,
             'identityCookie' => ['name' => '_identity', 'httpOnly' => true],
         ],
         'errorHandler' => [
@@ -124,14 +120,14 @@ $config = [
             ],
         ],
         'as cors' => [
-    'class' => \yii\filters\Cors::class,
-    'cors' => [
-        'Origin' => ['https://d1very.github.io, http://localhost:3000'],
-        'Access-Control-Allow-Credentials' => true,  // Обязательно для передачи cookies
-        'Access-Control-Allow-Methods' => ['GET', 'POST', 'PUT', 'DELETE'],
-        'Access-Control-Allow-Headers' => ['Content-Type', 'Authorization', 'X-Requested-With'],
-    ],
-],
+            'class' => \yii\filters\Cors::class,
+            'cors' => [
+                'Origin' => ['https://d1very.github.io, http://localhost:3000'],
+                'Access-Control-Allow-Credentials' => true,  // Обязательно для передачи cookies
+                'Access-Control-Allow-Methods' => ['GET', 'POST', 'PUT', 'DELETE'],
+                'Access-Control-Allow-Headers' => ['Content-Type', 'Authorization', 'X-Requested-With'],
+            ],
+        ],
     ],
     'params' => $params,
 ];
