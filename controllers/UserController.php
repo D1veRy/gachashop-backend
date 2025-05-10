@@ -13,14 +13,6 @@ use yii\web\NotFoundHttpException;
 
 class UserController extends Controller
 {
-    public function actionGetCsrfToken()
-    {
-        // Возвращаем CSRF токен
-        return $this->asJson([
-            'csrfToken' => Yii::$app->request->getCsrfToken()
-        ]);
-    }
-
     public function behaviors()
 {
     $behaviors = parent::behaviors();
