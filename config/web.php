@@ -15,6 +15,10 @@ $config = [
         'response' => [
             'format' => yii\web\Response::FORMAT_JSON
         ],
+    'request' => [
+        'cookieValidationKey' => 'dsfdsfsfsdfsdfsdf',
+        'csrfParam' => '_csrf',
+    ],
     'i18n' => [
         'translations' => [
             'yii/bootstrap5' => [
@@ -39,7 +43,8 @@ $config = [
             'useCookies' => true,
             'cookieParams' => [
                 'httpOnly' => true,
-                'secure' => false, // только на продакшн
+                'secure' => true, // только на продакшн
+    'sameSite' => 'None',
             ],
             'timeout' => 86400,
         ],
@@ -49,6 +54,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\UserIdentity',
             'enableAutoLogin' => true,
+        'loginUrl' => null,
             'identityCookie' => ['name' => '_identity', 'httpOnly' => true],
         ],
         'errorHandler' => [
