@@ -122,11 +122,12 @@ $config = [
     'params' => $params,
 ];
 
+// Для среды разработки добавляем debug и gii
 if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
-        'allowedIPs' => ['127.0.0.1', '::1'], // Укажи свой IP или IP сети Render, если нужно
+        'allowedIPs' => ['127.0.0.1', '::1', 'your-ip-or-render-ip'], // Добавь свой IP или IP сети Render
     ];
 
     $config['bootstrap'][] = 'gii';
@@ -135,8 +136,8 @@ if (YII_ENV_DEV) {
     ];
 }
 
+// Для продакшн-среды убираем debug и gii
 if (YII_ENV_PROD) {
-    // Отключаем модули отладки и профилирования в продакшн
     unset($config['modules']['debug']);
     unset($config['modules']['gii']);
 }
