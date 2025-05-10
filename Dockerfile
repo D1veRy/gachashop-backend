@@ -18,8 +18,8 @@ RUN composer install --no-dev --optimize-autoloader
 RUN mkdir -p /var/www/html/runtime /var/www/html/web/assets && \
     chown -R www-data:www-data /var/www/html
 
-# Открываем порт, на котором будет работать PHP-FPM
-EXPOSE 9000
+# Открываем порт 10000 (Render требует этого порта)
+EXPOSE 10000
 
-# Запуск PHP-FPM
-CMD ["php-fpm"]
+# Запуск PHP встроенного сервера на порту 10000
+CMD ["php", "-S", "0.0.0.0:10000", "-t", "web"]
