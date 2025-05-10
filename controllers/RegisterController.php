@@ -10,23 +10,6 @@ use yii\filters\Cors;
 
 class RegisterController extends Controller
 {
-    public function behaviors()
-{
-    $behaviors = parent::behaviors();
-
-    $behaviors['corsFilter'] = [
-        'class' => \yii\filters\Cors::class,
-        'cors' => [
-            'Origin' => ['https://d1very.github.io'],
-            'Access-Control-Allow-Credentials' => true,
-            'Access-Control-Allow-Headers' => ['Content-Type', 'Authorization'],
-            'Access-Control-Allow-Methods' => ['GET', 'POST', 'OPTIONS'],
-        ],
-    ];
-
-    return $behaviors;
-}
-
     public function actionCsrfToken()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
