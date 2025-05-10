@@ -124,7 +124,7 @@ $config = [
             'cors' => [
                 'Origin' => ['https://d1very.github.io, http://localhost:3000'],
                 'Access-Control-Allow-Credentials' => true,  // Обязательно для передачи cookies
-                'Access-Control-Allow-Methods' => ['GET', 'POST', 'PUT', 'DELETE'],
+                'Access-Control-Allow-Methods' => ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
                 'Access-Control-Allow-Headers' => ['Content-Type', 'Authorization', 'X-Requested-With'],
             ],
         ],
