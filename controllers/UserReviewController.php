@@ -11,22 +11,6 @@ use yii\web\Response;
 
 class UserReviewController extends Controller
 {
-    public function behaviors()
-    {
-        return [
-            'corsFilter' => [
-                'class' => \yii\filters\Cors::class,
-                'cors' => [
-                    'Origin' => ['https://d1very.github.io'],  // Доверенный источник
-                    'Access-Control-Request-Method' => ['GET', 'POST', 'OPTIONS'],  // Разрешенные методы
-                    'Access-Control-Allow-Headers' => ['Content-Type', 'Authorization', 'X-CSRF-Token'],  // Разрешаем заголовки
-                    'Access-Control-Allow-Credentials' => true,  // Разрешаем отправку куки
-                    'Access-Control-Max-Age' => 3600,  // Кэширование preflight
-                    'Access-Control-Allow-Origin' => ['https://d1very.github.io'],  // Разрешаем доступ с фронтенда
-                ],
-            ],
-        ];
-    }
     public function actionCreate()
     {
         $request = Yii::$app->request;
