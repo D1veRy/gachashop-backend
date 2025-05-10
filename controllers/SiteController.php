@@ -15,6 +15,12 @@ class SiteController extends Controller
     /**
      * {@inheritdoc}
      */
+
+    public function actionCsrfToken()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return ['csrfToken' => Yii::$app->request->getCsrfToken()];
+    }
     public function behaviors()
     {
         return [
