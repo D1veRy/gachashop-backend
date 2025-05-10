@@ -43,8 +43,8 @@ $config = [
     'useCookies' => true,
     'cookieParams' => [
         'httpOnly' => true,
-        'secure' => true,  // Применяется только на продакшн
-        'sameSite' => 'None',
+        'secure' => true,  // только на продакшн
+        'sameSite' => 'None', // или попробуйте 'Lax' или 'Strict'
     ],
     'timeout' => 86400,
 ],
@@ -124,14 +124,14 @@ $config = [
             ],
         ],
         'as cors' => [
-            'class' => \yii\filters\Cors::class,
-            'cors' => [
-                'Origin' => ['https://d1very.github.io/'],
-                'Access-Control-Request-Method' => ['GET', 'POST', 'OPTIONS'],
-                'Access-Control-Allow-Credentials' => true,
-                'Access-Control-Allow-Headers' => ['*'],
-            ],
-        ],
+    'class' => \yii\filters\Cors::class,
+    'cors' => [
+        'Origin' => ['https://d1very.github.io'],
+        'Access-Control-Allow-Credentials' => true,  // Обязательно для передачи cookies
+        'Access-Control-Allow-Methods' => ['GET', 'POST', 'PUT', 'DELETE'],
+        'Access-Control-Allow-Headers' => ['Content-Type', 'Authorization', 'X-Requested-With'],
+    ],
+],
     ],
     'params' => $params,
 ];
