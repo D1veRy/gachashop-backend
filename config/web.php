@@ -38,16 +38,16 @@ $config = [
             ],
         ],
         'session' => [
-            'class' => 'yii\web\Session',
-            'name' => 'PHPSESSID',
-            'useCookies' => true,
-            'cookieParams' => [
-                'httpOnly' => true,
-                'secure' => true, // только на продакшн
-    'sameSite' => 'None',
-            ],
-            'timeout' => 86400,
-        ],
+    'class' => 'yii\web\Session',
+    'name' => 'PHPSESSID',
+    'useCookies' => true,
+    'cookieParams' => [
+        'httpOnly' => true,
+        'secure' => true,  // Применяется только на продакшн
+        'sameSite' => 'None',
+    ],
+    'timeout' => 86400,
+],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
