@@ -14,9 +14,6 @@ COPY . .
 # Устанавливаем зависимости с помощью Composer
 RUN composer install --no-dev --optimize-autoloader
 
-# Выполняем миграции базы данных (если требуется)
-RUN php yii migrate --interactive=0
-
 # Устанавливаем права на каталоги для Yii2
 RUN mkdir -p /var/www/html/runtime /var/www/html/web/assets && \
     chown -R www-data:www-data /var/www/html
