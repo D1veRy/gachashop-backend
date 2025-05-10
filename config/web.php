@@ -15,6 +15,14 @@ $config = [
         'response' => [
             'format' => yii\web\Response::FORMAT_JSON
         ],
+    'i18n' => [
+        'translations' => [
+            'yii/bootstrap5' => [
+                'class' => 'yii\i18n\PhpMessageSource',
+                'basePath' => '@yii/bootstrap5/messages',
+            ],
+        ],
+    ],
         'timeZone' => 'Europe/Moscow',
         'request' => [
             'cookieValidationKey' => '2qth1u7lIgEbySpL',
