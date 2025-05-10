@@ -11,19 +11,21 @@ use yii\filters\Cors;
 class RegisterController extends Controller
 {
     public function behaviors()
-    {
-        return [
-            'corsFilter' => [
-                'class' => Cors::class,
-                'cors' => [
-                    'Origin' => ['https://d1very.github.io'],  // Фронтенд-адрес
-                    'Access-Control-Allow-Credentials' => true,
-                    'Access-Control-Allow-Methods' => ['GET', 'POST', 'OPTIONS'],
-                    'Access-Control-Allow-Headers' => ['Content-Type', 'Authorization', 'X-CSRF-Token'],
-                ],
-            ],
-        ];
-    }
+{
+    $behaviors = parent::behaviors();
+
+    $behaviors['corsFilter'] = [
+        'class' => \yii\filters\Cors::class,
+        'cors' => [
+            'Origin' => ['https://d1very.github.io'],
+            'Access-Control-Allow-Credentials' => true,
+            'Access-Control-Allow-Headers' => ['Content-Type', 'Authorization'],
+            'Access-Control-Allow-Methods' => ['GET', 'POST', 'OPTIONS'],
+        ],
+    ];
+
+    return $behaviors;
+}
 
     public function actionCsrfToken()
     {
