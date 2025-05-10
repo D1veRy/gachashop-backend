@@ -1,8 +1,9 @@
 # Используем официальный образ PHP с FPM
 FROM php:8.1-fpm
 
-# Устанавливаем зависимости
-RUN apt-get update && apt-get install -y libpq-dev git unzip
+# Устанавливаем зависимости для работы с PostgreSQL и другие необходимые пакеты
+RUN apt-get update && apt-get install -y libpq-dev git unzip \
+    && docker-php-ext-install pdo_pgsql
 
 # Устанавливаем Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
