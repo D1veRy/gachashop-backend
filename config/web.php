@@ -9,19 +9,39 @@ $config = [
     'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
     'components' => [
+        'response' => [
+            'format' => yii\web\Response::FORMAT_JSON
+        ],
+        'timeZone' => 'Europe/Moscow',
         'request' => [
-            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => '',
+            'cookieValidationKey' => '2qth1u7lIgEbySpL',
+            'enableCsrfValidation' => false,
+            'enableCookieValidation' => false,
+            'csrfParam' => '_csrf',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ],
+        ],
+        'session' => [
+            'class' => 'yii\web\Session',
+            'name' => 'PHPSESSID',
+            'useCookies' => true,
+            'cookieParams' => [
+                'httpOnly' => true,
+                'secure' => false, // только на продакшн
+            ],
+            'timeout' => 86400,
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'app\models\UserIdentity',
             'enableAutoLogin' => true,
+            'identityCookie' => ['name' => '_identity', 'httpOnly' => true],
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -29,7 +49,6 @@ $config = [
         'mailer' => [
             'class' => \yii\symfonymailer\Mailer::class,
             'viewPath' => '@app/mail',
-            // send all mails to a file by default.
             'useFileTransport' => true,
         ],
         'log' => [
@@ -37,38 +56,89 @@ $config = [
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
+                    'levels' => ['error', 'warning', 'info'],
+                    'logFile' => '@runtime/logs/app.log',
                 ],
             ],
         ],
         'db' => $db,
-        /*
         'urlManager' => [
+            'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'games' => 'games/index',
+                'catalog' => 'catalog/index',
+                'products/delete/<id:\d+>' => 'products/delete',
+                'GET products/<id:\d+>' => 'products/get-product',
+                'GET products' => 'products/index',
+                'POST products/create' => 'products/create',
+                'products/update/<id:\d+>' => 'products/update',
+                'categories' => 'categories/index',
+                'GET /register' => 'register/index',
+                'POST /register' => 'register/register',
+                'POST /register/login' => 'register/login',
+                'GET /user/get-user' => 'user/get-user',
+                'POST user/check-secret-question' => 'user/check-secret-question',
+                'POST user/reset-password' => 'user/reset-password',
+                'GET /user/get-csrf-token' => 'user/get-csrf-token',
+                'POST user/logout' => 'user/logout',
+                'POST user/change-password' => 'user/change-password',
+                'GET user/get-user-data' => 'user/get-user-data',
+                'GET user/get-user-cashback' => 'user/get-user-cashback',
+                'POST user/update-cashback' => 'user/update-cashback',
+                'GET users/<id:\d+>' => 'user/view',
+                'user/me' => 'user/me',
+                'GET order/count' => 'order/count',
+                'POST order/create' => 'order/create',
+                'GET order/get-orders' => 'order/get-orders',
+                'GET order/get-statuses' => 'order/get-statuses',
+                'order/update-status/<id:\d+>' => 'order/update-status',
+                'order/delete/<id:\d+>' => 'order/delete',
+                'GET order/get-order-id-by-code/<orderCode>' => 'order/get-order-id-by-code',
+                'GET order/orders' => 'order/orders',
+                'POST card/save' => 'card/save',
+                'GET card/cards' => 'card/cards',
+                'card/delete/<id:\d+>' => 'card/delete',
+                'GET card/get-user-cards' => 'card/get-user-cards',
+                'POST user-review/create' => 'user-review/create',
+                'GET user-review/check' => 'user-review/check-review',
+                'GET user-review/reviews' => 'user-review/reviews',
+                'GET user-review/get-all' => 'user-review/get-all',
+                'POST /admin-answer/submit' => 'admin-answer/submit',
+                'user-review/delete-reply/<id:\d+>' => 'user-review/delete-reply',
             ],
         ],
-        */
+        'as cors' => [
+            'class' => \yii\filters\Cors::class,
+            'cors' => [
+                'Origin' => ['https://d1very.github.io/'],
+                'Access-Control-Request-Method' => ['GET', 'POST', 'OPTIONS'],
+                'Access-Control-Allow-Credentials' => true,
+                'Access-Control-Allow-Headers' => ['*'],
+            ],
+        ],
     ],
     'params' => $params,
 ];
 
 if (YII_ENV_DEV) {
-    // configuration adjustments for 'dev' environment
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
-        // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+        'allowedIPs' => ['127.0.0.1', '::1'], // Укажи свой IP или IP сети Render, если нужно
     ];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
-        // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
     ];
+}
+
+if (YII_ENV_PROD) {
+    // Отключаем модули отладки и профилирования в продакшн
+    unset($config['modules']['debug']);
+    unset($config['modules']['gii']);
 }
 
 return $config;
