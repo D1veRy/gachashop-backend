@@ -12,23 +12,6 @@ use yii\web\BadRequestHttpException;
 
 class ProductsController extends Controller
 {
-    // Настраиваем CORS для работы с фронтендом на другом домене (если нужно)
-    public function behaviors()
-    {
-        return [
-            'corsFilter' => [
-                'class' => Cors::class,
-                'cors' => [
-                    'Origin' => ['https://d1very.github.io'], // Указываем фронтенд
-                    'Access-Control-Allow-Methods' => ['GET', 'POST', 'DELETE', 'OPTIONS', 'PUT'],
-                    'Access-Control-Allow-Headers' => ['Content-Type', 'Authorization'],
-                    'Access-Control-Allow-Credentials' => true,
-                ],
-            ],
-        ];
-    }
-
-
     public function actionGetProduct($id)
     {
         // Выполняем запрос к базе данных для получения информации о товаре
