@@ -8,25 +8,6 @@ use yii\web\Response;
 
 class CategoriesController extends Controller
 {
-    public function behaviors()
-    {
-        return [
-            'corsFilter' => [
-                'class' => \yii\filters\Cors::class,
-                'cors' => [
-                    //Прописываем адрес нашего клиента
-                    'Origin' => ['https://d1very.github.io'],
-                    //Добавляем необходимыве заголовки
-                    'Access-Control-Request-Method' => ['GET', 'POST', 'PUT'],
-                    'Access-Control-Request-Headers' => ['*'],
-                    'Access-Control-Allow-Credentials' => true,
-                    'Access-Control-Max-Age' => 3600
-                ],
-
-            ],
-        ];
-    }
-
     public function actionIndex()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
