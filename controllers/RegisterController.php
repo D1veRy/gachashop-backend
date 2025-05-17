@@ -143,10 +143,9 @@ class RegisterController extends BaseApiController
         // Генерация JWT
         $key = Yii::$app->params['jwtSecretKey'];  // секретный ключ из конфига
         $payload = [
-            'iss' => 'localhost',  // издатель
-            'aud' => 'localhost',  // аудитория
+            'iss' => 'gachashop',  // издатель
+            'aud' => 'gachashop',  // аудитория
             'iat' => time(),            // время выпуска
-            'exp' => time() + 3600 * 24 * 30, // срок жизни 30 дней
             'uid' => $user->id,
             'nickname' => $user->nickname,
         ];
