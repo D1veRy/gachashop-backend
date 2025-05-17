@@ -58,7 +58,6 @@ class OrderController extends BaseApiController
             $userIdFromToken = $decoded->uid;
 
             // Получаем данные из тела запроса
-            $rawData = file_get_contents('php://input');
             $data = Yii::$app->request->getBodyParams();
 
             if (!$data) {
