@@ -59,7 +59,7 @@ class OrderController extends BaseApiController
 
             // Получаем данные из тела запроса
             $rawData = file_get_contents('php://input');
-            $data = json_decode($rawData, true);
+            $data = Yii::$app->request->getBodyParams();
 
             if (!$data) {
                 return ['success' => false, 'error' => 'Не удалось декодировать JSON данные'];
