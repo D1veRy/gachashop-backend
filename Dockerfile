@@ -1,4 +1,4 @@
-FROM php:8.1-fpm
+FROM php:8.2-fpm
 
 RUN apt-get update && apt-get install -y \
     libpq-dev git unzip libzip-dev libicu-dev libxml2-dev libpng-dev libjpeg-dev libfreetype6-dev libonig-dev \
