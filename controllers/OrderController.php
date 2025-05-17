@@ -69,12 +69,6 @@ class OrderController extends BaseApiController
                 return ['success' => false, 'error' => 'Не все необходимые поля переданы'];
             }
 
-            // Если user_id передаётся в теле запроса, то можно проверить совпадение:
-            if (isset($data['user_id']) && $data['user_id'] != $userIdFromToken) {
-                Yii::$app->response->statusCode = 401;
-                return ['message' => 'Неверный пользователь'];
-            }
-
             // Теперь используем userId из токена, а не из тела запроса
             $userId = $userIdFromToken;
             $orderName = $data['order_name'];
