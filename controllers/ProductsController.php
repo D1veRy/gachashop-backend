@@ -96,9 +96,15 @@ class ProductsController extends BaseApiController
                 ];
             }
 
-        } catch (\Exception $e) {
+        } catch (\Firebase\JWT\ExpiredException $e) {
             Yii::$app->response->statusCode = 401;
-            return ['success' => false, 'message' => 'Ошибка авторизации: ' . $e->getMessage()];
+            return ['success' => false, 'message' => 'JWT истёк'];
+        } catch (\DomainException | \UnexpectedValueException $e) {
+            Yii::$app->response->statusCode = 401;
+            return ['success' => false, 'message' => 'Неверный JWT'];
+        } catch (\Throwable $e) {
+            Yii::$app->response->statusCode = 500;
+            return ['success' => false, 'message' => 'Ошибка сервера: ' . $e->getMessage()];
         }
     }
     public function actionUpdate($id)
