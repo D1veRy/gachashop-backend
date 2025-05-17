@@ -123,10 +123,10 @@ class OrderController extends BaseApiController
             }
         } catch (\Exception $e) {
             Yii::$app->response->statusCode = 401;
-            return ['message' => 'Неверный токен авторизации',
-                'error' => $e->getMessage(),
+            return [
+                'message' => 'Неверный токен авторизации',
+                'error' => $e->getMessage(),  // выведет подробности ошибки
             ];
-            
         }
     }
 
