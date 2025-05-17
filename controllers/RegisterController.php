@@ -150,9 +150,7 @@ class RegisterController extends BaseApiController
     'nickname' => $user->nickname,
 ];
 
-$token = JWT::encode($payload, $key, 'HS256');
-
-        $jwt = JWT::encode($payload, $key, 'HS256');
+$jwt = JWT::encode($payload, $key, 'HS256');
 
         return [
             'status' => 'success',
