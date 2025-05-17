@@ -146,6 +146,7 @@ class RegisterController extends BaseApiController
     'iss' => 'gachashop',
     'aud' => 'gachashop',
     'iat' => time(),
+    'exp' => time() + 3600,
     'uid' => $user->id,
     'nickname' => $user->nickname,
 ];
