@@ -1,7 +1,7 @@
 FROM php:8.1-fpm
 
 RUN apt-get update && apt-get install -y \
-    libpq-dev git unzip libzip-dev libicu-dev libxml2-dev libpng-dev libjpeg-dev libfreetype6-dev \
+    libpq-dev git unzip libzip-dev libicu-dev libxml2-dev libpng-dev libjpeg-dev libfreetype6-dev libonig-dev \
     && docker-php-ext-configure zip \
     && docker-php-ext-install pdo_pgsql zip intl mbstring xml gd
 
