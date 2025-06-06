@@ -23,6 +23,10 @@ class UserController extends BaseApiController
 
         $behaviors['authenticator'] = [
             'class' => HttpBearerAuth::class,
+            'except' => [
+                'check-secret-question',
+                'reset-password',
+            ],
         ];
 
         return $behaviors;

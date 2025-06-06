@@ -1,26 +1,21 @@
-# Используем официальный образ PHP с FPM
-FROM php:8.1-fpm
+FROM php:8.2-fpm
 
-# Устанавливаем зависимости для работы с PostgreSQL и другие необходимые пакеты
-RUN apt-get update && apt-get install -y libpq-dev git unzip \
-    && docker-php-ext-install pdo_pgsql
+RUN apt-get update && apt-get install -y \
+    libpq-dev git unzip libzip-dev libicu-dev libxml2-dev libpng-dev libjpeg-dev libfreetype6-dev libonig-dev \
+    && docker-php-ext-configure zip \
+    && docker-php-ext-install pdo_pgsql zip intl mbstring xml gd
 
-# Устанавливаем Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Копируем проект в контейнер
 WORKDIR /var/www/html
 COPY . .
 
-# Устанавливаем зависимости с помощью Composer
-RUN composer install --no-dev --optimize-autoloader
+RUN chown -R www-data:www-data /var/www/html
 
-# Устанавливаем права на каталоги для Yii2
-RUN mkdir -p /var/www/html/runtime /var/www/html/web/assets && \
-    chown -R www-data:www-data /var/www/html
+RUN composer install --no-dev --optimize-autoloader --verbose
 
-# Открываем порт 10000 (Render требует этого порта)
+RUN mkdir -p runtime web/assets && chown -R www-data:www-data runtime web/assets
+
 EXPOSE 10000
 
-# Запуск PHP встроенного сервера на порту 10000
 CMD ["php", "-S", "0.0.0.0:10000", "-t", "web"]

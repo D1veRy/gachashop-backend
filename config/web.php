@@ -106,6 +106,7 @@ $config = [
                 'order/delete/<id:\d+>' => 'order/delete',
                 'GET order/get-order-id-by-code/<orderCode>' => 'order/get-order-id-by-code',
                 'GET order/orders' => 'order/orders',
+                'order/receipt' => 'order/receipt',
                 'POST card/save' => 'card/save',
                 'GET card/cards' => 'card/cards',
                 'card/delete/<id:\d+>' => 'card/delete',

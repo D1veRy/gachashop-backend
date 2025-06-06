@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\UserReview;
 use Yii;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use app\models\Order;
 use app\models\User;
@@ -13,19 +14,10 @@ use app\controllers\BaseApiController;
 use yii\filters\auth\HttpBearerAuth;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use Mpdf\Mpdf;
 
 class OrderController extends BaseApiController
 {
-    public function behaviors()
-    {
-        $behaviors = parent::behaviors();
-
-        $behaviors['authenticator'] = [
-            'class' => HttpBearerAuth::class,
-        ];
-
-        return $behaviors;
-    }
     public function actionCount()
     {
         $user = Yii::$app->user->identity;
@@ -428,5 +420,37 @@ class OrderController extends BaseApiController
             Yii::$app->response->statusCode = 401;
             return ['error' => 'Ошибка авторизации'];
         }
+    }
+
+    public function actionReceipt($id)
+    {
+        $order = Order::findOne($id);
+        if (!$order) {
+            throw new \yii\web\NotFoundHttpException('Order not found');
+        }
+
+        $html = $this->renderPartial('receipt', ['order' => $order]);
+
+        $filename = 'check_order_' . $order->id . '_' . date('Ymd_His', strtotime($order->order_date)) . '.pdf';
+
+        // Очистка буферов вывода и заголовков
+        while (ob_get_level()) {
+            ob_end_clean();
+        }
+        header_remove();
+
+        // Заголовки для PDF
+        header('Content-Type: application/pdf');
+        header('Content-Disposition: inline; filename="' . $filename . '"');
+        header('Cache-Control: private, max-age=0, must-revalidate');
+        header('Pragma: public');
+
+        $mpdf = new \Mpdf\Mpdf([
+            'tempDir' => __DIR__ . '/../../runtime/mpdf_temp',
+        ]);
+        $mpdf->WriteHTML($html);
+        $mpdf->Output($filename, \Mpdf\Output\Destination::DOWNLOAD);
+
+        exit;
     }
 }

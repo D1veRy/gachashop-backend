@@ -20,17 +20,14 @@ class RegisterController extends BaseApiController
 
         $behaviors['authenticator'] = [
             'class' => HttpBearerAuth::class,
-            'except' => ['login', 'register'],
+            'except' => [
+                'login',
+                'register',
+            ],
         ];
 
         return $behaviors;
     }
-    public function actionCsrfToken()
-    {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return ['csrfToken' => Yii::$app->request->getCsrfToken()];
-    }
-
     public function actionIndex()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -143,10 +140,9 @@ class RegisterController extends BaseApiController
         // Генерация JWT
         $key = Yii::$app->params['jwtSecretKey'];  // секретный ключ из конфига
         $payload = [
-            'iss' => 'localhost',  // издатель
-            'aud' => 'localhost',  // аудитория
+            'iss' => 'gachashop',  // издатель
+            'aud' => 'gachashop',  // аудитория
             'iat' => time(),            // время выпуска
-            'exp' => time() + 3600 * 24 * 30, // срок жизни 30 дней
             'uid' => $user->id,
             'nickname' => $user->nickname,
         ];

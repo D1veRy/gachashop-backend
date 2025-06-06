@@ -3,6 +3,8 @@
 namespace app\controllers;
 
 use app\models\User;
+use DateTime;
+use DateTimeZone;
 use Yii;
 use yii\web\Controller;
 use app\models\UserReview;
@@ -49,7 +51,8 @@ class UserReviewController extends BaseApiController
                 $userReview = new UserReview();
                 $userReview->user_id = $userId; // Берём ID из JWT
                 $userReview->review = $reviewData['review'];
-                $userReview->created_at = date('Y-m-d H:i:s');
+                $userReview->created_at = (new DateTime('now', new DateTimeZone('Europe/Moscow')))
+                    ->format('Y-m-d H:i:s');
                 $userReview->text = !empty($reviewData['text']) ? $reviewData['text'] : null;
                 $userReview->order_id = $reviewData['order_id'];
 
